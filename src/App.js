@@ -5,7 +5,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState } from "react";
 import NotFound from "./screen/NotFound";
 import { ThemeProvider } from "styled-components";
-import { GlobalStyle, theme } from "./theme";
+import { GlobalStyle, theme } from "./styles/theme";
+import routes from "./routes";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -15,12 +16,12 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="*" element={<NotFound />} />
-          <Route path="/" element={<SignUp />} />
+          <Route path={routes.signUp} element={<SignUp />} />
           {isLoggedIn ? (
-            <Route path="/todo" element={<Todo />} />
+            <Route path={routes.todos} element={<Todo />} />
           ) : (
             <Route
-              path="/sign-in"
+              path={routes.signIn}
               element={<SignIn setIsLoggedIn={setIsLoggedIn} />}
             />
           )}

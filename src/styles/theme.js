@@ -121,6 +121,8 @@ footer, header, hgroup, menu, nav, section {
 
 body {
 	line-height: 1.2;
+  font-family: 'Source Sans Pro', sans-serif;
+  color: ${(props) => props.theme.color.textColor.lg};
 }
 ol, ul {
 	list-style: none;
@@ -143,9 +145,10 @@ a {
   color: inherit;
 }
 
-input  { 
+input, button  { 
   border: none;
   outline: none;
   background-color : transparent;
 }
+
 `;

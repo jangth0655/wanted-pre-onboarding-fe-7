@@ -1,9 +1,36 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../components/enter/Button";
+import ErrorMessage from "../components/enter/ErrorMessage";
 import Input from "../components/enter/Input";
+import LinkComp from "../components/enter/LinkComp";
+import Layout from "../components/Layout";
 import useMutation from "../lib/useMutation";
+import routes from "../routes";
+
+const Title = styled.h1`
+  font-weight: 900;
+  font-size: ${(props) => props.theme.textSize.xxxxl};
+  margin-bottom: ${(props) => props.theme.mp.xxl};
+  color: ${(props) => props.theme.color.activeColor.xl};
+`;
+
+const Container = styled.div`
+  background-color: white;
+  border-radius: ${(props) => props.theme.borderRadius.md};
+  padding: ${(props) => props.theme.mp.xxl} ${(props) => props.theme.mp.sm};
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: ${(props) => props.theme.shadow.md};
+`;
+
+const Form = styled.form`
+  width: 100%;
+`;
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -65,13 +92,14 @@ const SignUp = () => {
     }
   }, [error]);
 
-  const errorState = emailError || errors || passwordError;
+  const errorMessage = emailError || errors || passwordError;
 
   return (
-    <div>
-      <h1>회원가입</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
+    <Layout>
+      <Container>
+        <Title>SignUp</Title>
+
+        <Form onSubmit={handleSubmit}>
           <Input
             label="이메일"
             type="text"
@@ -80,8 +108,6 @@ const SignUp = () => {
             id="email"
             placeholder="이메일을 입력해주세요."
           />
-        </div>
-        <div>
           <Input
             label="패스워드"
             id="password"
@@ -90,24 +116,21 @@ const SignUp = () => {
             placeholder="비밀번호를 입력해주세요."
             type="password"
           />
-        </div>
-        <div>
           <Button
-            disabled={errorState || email === "" || password === ""}
+            disabled={
+              errorMessage ||
+              email === "" ||
+              password === "" ||
+              password.length < 8
+            }
             text="회원가입"
             isLoading={isLoading}
           />
-        </div>
-        <div>
-          <h1>{errorState}</h1>
-        </div>
-      </form>
-      <div>
-        <Link to="/sign-in">
-          <span>로그인 바로가기</span>
-        </Link>
-      </div>
-    </div>
+        </Form>
+        {errorMessage && <ErrorMessage errorText={errorMessage} />}
+        <LinkComp text="로그인" path={routes.signIn} />
+      </Container>
+    </Layout>
   );
 };
 export default SignUp;
