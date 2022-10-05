@@ -2,9 +2,9 @@ import styled from "styled-components";
 
 import { HiOutlineUser } from "react-icons/hi";
 import { HiOutlineLockClosed } from "react-icons/hi";
-import { EnterBox } from "../shared";
+import { EnterCommonBox } from "../shared";
 
-const InputContainer = styled(EnterBox)`
+const InputContainer = styled(EnterCommonBox)`
   &:first-child {
     margin-bottom: ${(props) => props.theme.mp.lg};
   }

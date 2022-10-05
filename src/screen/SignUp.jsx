@@ -5,34 +5,18 @@ import Button from "../components/enter/Button";
 import ErrorMessage from "../components/enter/ErrorMessage";
 import Input from "../components/enter/Input";
 import LinkComp from "../components/enter/LinkComp";
+import Title from "../components/enter/Title";
 import Layout from "../components/Layout";
+import { EnterPageContainer } from "../components/shared";
 import useMutation from "../lib/useMutation";
 import routes from "../routes";
-
-const Title = styled.h1`
-  font-weight: 900;
-  font-size: ${(props) => props.theme.textSize.xxxxl};
-  margin-bottom: ${(props) => props.theme.mp.xxl};
-  color: ${(props) => props.theme.color.activeColor.xl};
-`;
-
-const Container = styled.div`
-  background-color: white;
-  border-radius: ${(props) => props.theme.borderRadius.md};
-  padding: ${(props) => props.theme.mp.xxl} ${(props) => props.theme.mp.sm};
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  box-shadow: ${(props) => props.theme.shadow.md};
-`;
+import { getLocalStorage, TOKEN } from "../server";
 
 const Form = styled.form`
   width: 100%;
 `;
 
-const SignUp = () => {
+const SignUp = ({ setIsLoggedIn }) => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -92,13 +76,26 @@ const SignUp = () => {
     }
   }, [error]);
 
+  useEffect(() => {
+    const localStorageItem = getLocalStorage({ name: TOKEN });
+    if (localStorageItem) {
+      setIsLoggedIn(true);
+    }
+  }, [setIsLoggedIn]);
+
   const errorMessage = emailError || errors || passwordError;
+
+  const disabled =
+    errorMessage ||
+    email === "" ||
+    !email.includes("@") ||
+    password === "" ||
+    password.length < 8;
 
   return (
     <Layout>
-      <Container>
-        <Title>SignUp</Title>
-
+      <EnterPageContainer>
+        <Title title="Sign Up" />
         <Form onSubmit={handleSubmit}>
           <Input
             label="이메일"
@@ -116,20 +113,11 @@ const SignUp = () => {
             placeholder="비밀번호를 입력해주세요."
             type="password"
           />
-          <Button
-            disabled={
-              errorMessage ||
-              email === "" ||
-              password === "" ||
-              password.length < 8
-            }
-            text="회원가입"
-            isLoading={isLoading}
-          />
+          <Button disabled={disabled} text="회원가입" isLoading={isLoading} />
         </Form>
         {errorMessage && <ErrorMessage errorText={errorMessage} />}
         <LinkComp text="로그인" path={routes.signIn} />
-      </Container>
+      </EnterPageContainer>
     </Layout>
   );
 };

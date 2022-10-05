@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { EnterBox } from "../shared";
+import { EnterCommonBox } from "../shared";
 
-const LinkContainer = styled(EnterBox)``;
+const LinkContainer = styled(EnterCommonBox)``;
 const LinkText = styled.span`
   display: flex;
   align-items: center;

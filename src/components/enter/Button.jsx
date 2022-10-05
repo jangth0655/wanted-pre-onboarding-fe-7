@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { EnterBox } from "../shared";
+import { EnterCommonBox } from "../shared";
 
-const ButtonContainer = styled(EnterBox)`
+const ButtonContainer = styled(EnterCommonBox)`
   margin-top: ${(props) => props.theme.mp.lg};
   margin-bottom: ${(props) => props.theme.mp.md};
 `;
