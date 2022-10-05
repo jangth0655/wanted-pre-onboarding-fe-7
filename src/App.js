@@ -1,4 +1,4 @@
-import Todo from "../src/screen/Todo";
+import Todos from "../src/screen/Todos";
 import SignUp from "../src/screen/SignUp";
 import SignIn from "../src/screen/SignIn";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
@@ -20,7 +20,7 @@ function App() {
             path={routes.todos}
             element={
               isLoggedIn ? (
-                <Todo isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+                <Todos isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
               ) : (
                 <Navigate to={routes.signUp} replace />
               )

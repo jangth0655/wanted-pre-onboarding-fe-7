@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import routes from "../routes";
 import { getLocalStorage, TOKEN } from "../server";
 
-const Home = ({ isLoggedIn, setIsLoggedIn }) => {
+const Todos = ({ isLoggedIn, setIsLoggedIn }) => {
   const navigate = useNavigate();
   useEffect(() => {
     if (!isLoggedIn) {
@@ -19,4 +19,4 @@ const Home = ({ isLoggedIn, setIsLoggedIn }) => {
   }, [setIsLoggedIn]);
   return <h1>Todo List</h1>;
 };
-export default Home;
+export default Todos;
