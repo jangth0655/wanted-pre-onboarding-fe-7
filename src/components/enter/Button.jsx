@@ -1,4 +1,4 @@
-const Button = ({ text, isLoading }) => {
-  return <button>{isLoading ? "loading..." : text}</button>;
+const Button = ({ text, isLoading, disabled }) => {
+  return <button disabled={disabled}>{isLoading ? "loading..." : text}</button>;
 };
 export default Button;

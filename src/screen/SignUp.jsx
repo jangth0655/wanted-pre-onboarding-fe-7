@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import styled from "styled-components";
 import Button from "../components/enter/Button";
 import Input from "../components/enter/Input";
 import useMutation from "../lib/useMutation";
-import { setLocalStorage } from "../server";
-
-const TOKEN = "access_token";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -56,8 +54,6 @@ const SignUp = () => {
 
   useEffect(() => {
     if (data && data.access_token) {
-      setLocalStorage({ name: TOKEN, value: data.access_token });
-
       navigate("/sign-in");
     }
   }, [data, navigate]);
@@ -96,7 +92,11 @@ const SignUp = () => {
           />
         </div>
         <div>
-          <Button text="회원가입" isLoading={isLoading} />
+          <Button
+            disabled={errorState || email === "" || password === ""}
+            text="회원가입"
+            isLoading={isLoading}
+          />
         </div>
         <div>
           <h1>{errorState}</h1>
