@@ -23,9 +23,14 @@ const ToDoInput = styled.input`
   border: 1px solid ${(props) => props.theme.color.bg.xl};
   margin-right: ${(props) => props.theme.mp.sm};
   font-size: ${(props) => props.theme.textSize.lg};
+  transition: ${(props) => props.theme.transition.md};
+  background-color: white;
   &::placeholder {
     color: ${(props) => props.theme.color.textColor.sm};
     font-size: ${(props) => props.theme.textSize.sm};
+  }
+  &:focus {
+    border: 1.5px solid ${(props) => props.theme.color.activeColor.sm};
   }
 `;
 const ToDoButton = styled.button`
@@ -41,9 +46,9 @@ const ToDoButton = styled.button`
   }
 `;
 
-const CreateTodo = () => {
+const CreateTodo = ({ setTodoList }) => {
   const [errorMessage, setErrorMessage] = useState("");
-  const [submitTodo, { isLoading, error }] = useMutation({
+  const [submitTodo, { data, isLoading, error }] = useMutation({
     url: "todos",
     token: getLocalStorage({ name: TOKEN }),
   });
@@ -62,6 +67,20 @@ const CreateTodo = () => {
     submitTodo({ todo });
     setTodo("");
   };
+
+  useEffect(() => {
+    if (data) {
+      setTodoList((prev) => [
+        ...prev,
+        {
+          id: data.id,
+          isCompleted: todo.isCompleted,
+          todo: data.todo,
+          userId: data.userId,
+        },
+      ]);
+    }
+  }, [data, setTodoList, todo.id, todo.isCompleted]);
 
   useEffect(() => {
     if (error) {

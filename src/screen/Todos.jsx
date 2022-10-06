@@ -6,14 +6,15 @@ import formatDateAndDay from "../lib/formatDateAndDay";
 import CreateTodo from "../components/todo/CreateTodo";
 import Todo from "../components/todo/Todo";
 import useFetch from "../lib/useFetch";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const Container = styled.div`
   height: 43rem;
   padding-bottom: ${(props) => props.theme.mp.sm};
-  background-color: white;
+  background-color: rgb(241 245 249);
   border-radius: ${(props) => props.theme.borderRadius.xl};
   position: relative;
+  box-shadow: ${(props) => props.theme.shadow.md};
 `;
 
 const Navbar = styled.nav`
@@ -37,6 +38,9 @@ const Title = styled.h1`
   font-weight: 900;
   font-size: ${(props) => props.theme.textSize.xxl};
   margin-right: ${(props) => props.theme.mp.md};
+  @media screen and (max-width: ${(props) => props.theme.responsive.sm}) {
+    font-size: ${(props) => props.theme.textSize.xl};
+  }
 `;
 
 const DateContainer = styled.div`
@@ -47,10 +51,16 @@ const DaySpan = styled.span`
   display: inline-block;
   margin-right: ${(props) => props.theme.mp.sm};
   font-size: ${(props) => props.theme.textSize.lg};
+  @media screen and (max-width: ${(props) => props.theme.responsive.sm}) {
+    font-size: ${(props) => props.theme.textSize.md};
+  }
 `;
 
 const DateSpan = styled.span`
   color: ${(props) => props.theme.color.textColor.xxs};
+  @media screen and (max-width: ${(props) => props.theme.responsive.sm}) {
+    font-size: ${(props) => props.theme.textSize.sm};
+  }
 `;
 
 const LogoutButton = styled.button`
@@ -65,18 +75,23 @@ const LogoutButton = styled.button`
 `;
 
 const ToDoListContainer = styled.ul`
-  padding: ${(props) => props.theme.mp.lg};
+  margin: ${(props) => props.theme.mp.lg} 0;
   overflow-y: scroll;
-  border: 1px solid black;
+  height: 70%;
 `;
 
 const Todos = ({ setIsLoggedIn }) => {
   const { data, isLoading } = useFetch({ url: "todos" });
+  const [todoList, setTodoList] = useState([]);
 
   const onLogout = () => {
     deleteLocalStorage({ name: TOKEN });
     setIsLoggedIn(false);
   };
+
+  useEffect(() => {
+    setTodoList(data);
+  }, [data]);
 
   useEffect(() => {
     const token = getLocalStorage({ name: TOKEN });
@@ -105,12 +120,12 @@ const Todos = ({ setIsLoggedIn }) => {
           "Loading..."
         ) : (
           <ToDoListContainer>
-            {data?.map((todo) => (
+            {todoList.reverse().map((todo) => (
               <Todo key={todo.id} {...todo} />
             ))}
           </ToDoListContainer>
         )}
-        <CreateTodo />
+        <CreateTodo setTodoList={setTodoList} />
       </Container>
     </Layout>
   );
