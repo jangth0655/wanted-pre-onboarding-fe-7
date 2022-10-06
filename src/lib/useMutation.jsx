@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { BASE_URL, getLocalStorage, TOKEN } from "../server";
 
-const useMutation = ({ url, token }) => {
+const useMutation = ({ url, method }) => {
   const [value, setValue] = useState({ data: "", isLoading: false, error: "" });
   const mutation = async (data) => {
     try {
@@ -9,7 +9,7 @@ const useMutation = ({ url, token }) => {
       setValue((prev) => ({ ...prev, isLoading: true }));
       const response = await (
         await fetch(`${BASE_URL}/${url}`, {
-          method: "POST",
+          method: method,
           body: JSON.stringify(data),
           headers: {
             "Content-Type": "application/json",

@@ -2,6 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { AiOutlineEdit } from "react-icons/ai";
 import { MdDone } from "react-icons/md";
+import EditTodo from "./EditTodo";
 
 const TodoContainer = styled.div`
   display: flex;
@@ -9,12 +10,11 @@ const TodoContainer = styled.div`
   align-items: center;
   position: relative;
   border-bottom: 1px solid ${(props) => props.theme.color.textColor.xs};
+  padding: ${(props) => props.theme.mp.lg};
   transition: ${(props) => props.theme.transition.md};
+  background-color: white;
   &:last-child {
     margin-bottom: 0;
-  }
-  &:hover {
-    background-color: white;
   }
 `;
 
@@ -49,8 +49,7 @@ const TodoWithEditContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: ${(props) => props.theme.mp.lg};
-  padding-left: ${(props) => props.theme.mp.xxxxl};
+  margin-left: ${(props) => props.theme.mp.xl};
   color: ${(props) => (props.checked ? props.theme.color.textColor.sm : "")};
 `;
 
@@ -68,10 +67,10 @@ const DoneTodoMark = styled.div`
 `;
 
 const TodoEdit = styled.button`
-  font-size: ${(props) => props.theme.textSize.xl};
   cursor: ${(props) => (props.checked ? "" : "pointer")};
   font-weight: 600;
   color: ${(props) => props.theme.color.textColor.sm};
+  font-size: ${(props) => props.theme.textSize.xl};
 `;
 
 const EditIcon = styled.span`
@@ -82,9 +81,10 @@ const EditIcon = styled.span`
   }
 `;
 
-const Todo = ({ id, todo, isCompleted, userId }) => {
+const Todo = ({ id, todo, setTodoList, isCompleted, userId }) => {
   const [checked, setChecked] = useState(false);
   const [editMode, setEditMode] = useState(false);
+
   const handleChangeCheck = () => {
     setChecked((checked) => !checked);
   };
@@ -119,9 +119,7 @@ const Todo = ({ id, todo, isCompleted, userId }) => {
             disabled={checked}
           >
             {checked ? (
-              <span>
-                <MdDone />
-              </span>
+              <MdDone />
             ) : (
               <EditIcon>
                 <AiOutlineEdit />
@@ -130,6 +128,16 @@ const Todo = ({ id, todo, isCompleted, userId }) => {
           </TodoEdit>
         </TodoWithEditContainer>
       </TodoContainer>
+
+      {editMode && (
+        <EditTodo
+          setTodoList={setTodoList}
+          setEditMode={setEditMode}
+          id={id}
+          isCompleted={isCompleted}
+          userId={userId}
+        />
+      )}
     </>
   );
 };

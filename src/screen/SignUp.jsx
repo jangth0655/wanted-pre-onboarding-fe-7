@@ -25,6 +25,7 @@ const SignUp = ({ setIsLoggedIn }) => {
   const [errors, setErrors] = useState("");
   const [signUp, { data, isLoading, error }] = useMutation({
     url: "auth/signup",
+    method: "POST",
   });
 
   const handleEmail = (event) => {

@@ -121,7 +121,7 @@ const Todos = ({ setIsLoggedIn }) => {
         ) : (
           <ToDoListContainer>
             {todoList.reverse().map((todo) => (
-              <Todo key={todo.id} {...todo} />
+              <Todo key={todo.id} {...todo} setTodoList={setTodoList} />
             ))}
           </ToDoListContainer>
         )}

@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { FaPlus } from "react-icons/fa";
 import useMutation from "../../lib/useMutation";
-import { getLocalStorage, TOKEN } from "../../server";
 import { useEffect, useState } from "react";
 import ErrorMessage from "../enter/ErrorMessage";
+import { TodoButton } from "../shared";
 
 const ToDoForm = styled.form`
   position: absolute;
@@ -33,24 +33,16 @@ const ToDoInput = styled.input`
     border: 1.5px solid ${(props) => props.theme.color.activeColor.sm};
   }
 `;
-const ToDoButton = styled.button`
+const ToDoButton = styled(TodoButton)`
   width: 10%;
   padding: ${(props) => props.theme.mp.sm};
-  background-color: ${(props) => props.theme.color.activeColor.sm};
-  border-radius: ${(props) => props.theme.borderRadius.md};
-  color: white;
-  cursor: pointer;
-  transition: ${(props) => props.theme.transition.md};
-  &:hover {
-    background-color: ${(props) => props.theme.color.activeColor.md};
-  }
 `;
 
 const CreateTodo = ({ setTodoList }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [submitTodo, { data, isLoading, error }] = useMutation({
     url: "todos",
-    token: getLocalStorage({ name: TOKEN }),
+    method: "POST",
   });
   const [todo, setTodo] = useState("");
 

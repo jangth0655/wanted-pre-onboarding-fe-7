@@ -19,3 +19,14 @@ export const EnterPageContainer = styled.div`
   align-items: center;
   box-shadow: ${(props) => props.theme.shadow.md};
 `;
+
+export const TodoButton = styled.button`
+  background-color: ${(props) => props.theme.color.activeColor.sm};
+  border-radius: ${(props) => props.theme.borderRadius.md};
+  color: white;
+  cursor: pointer;
+  transition: ${(props) => props.theme.transition.md};
+  &:hover {
+    background-color: ${(props) => props.theme.color.activeColor.md};
+  }
+`;
