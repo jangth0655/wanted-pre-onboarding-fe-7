@@ -82,13 +82,13 @@ const SignIn = ({ setIsLoggedIn }) => {
     password.length < 8;
 
   useEffect(() => {
-    const localStorageItem = getLocalStorage({ name: TOKEN });
+    const token = getLocalStorage({ name: TOKEN });
     if (data && data.access_token) {
       setIsLoggedIn(true);
-      setLocalStorage({ name: TOKEN, value: TOKEN });
+      setLocalStorage({ name: TOKEN, value: data.access_token });
       navigate(routes.todos);
     }
-    if (localStorageItem) {
+    if (token) {
       setIsLoggedIn(true);
     }
   }, [data, navigate, setIsLoggedIn]);
