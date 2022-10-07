@@ -24,6 +24,8 @@ const EditInput = styled.input`
 
 const EditButtonContainer = styled.div`
   margin-top: ${(props) => props.theme.mp.sm};
+  display: flex;
+  align-items: center;
 `;
 const EditButton = styled(TodoButton)`
   width: 5rem;
@@ -31,10 +33,17 @@ const EditButton = styled(TodoButton)`
   font-weight: 600;
 `;
 
-const DeleteButton = styled(EditButton)`
+const DeleteButton = styled(TodoButton).attrs({
+  as: "div",
+})`
   margin-left: ${(props) => props.theme.mp.sm};
   background-color: ${(props) => props.theme.color.red.sm};
   transition: ${(props) => props.theme.transition.md};
+  padding: ${(props) => props.theme.mp.sm};
+  width: 5rem;
+  text-align: center;
+  font-size: ${(props) => props.theme.textSize.sm};
+  font-weight: 600;
   &:hover {
     background-color: ${(props) => props.theme.color.red.md};
   }
@@ -52,6 +61,11 @@ const EditTodo = ({
     method: "PUT",
   });
 
+  const [deleteTodo, { isLoading: deleteLoading }] = useMutation({
+    url: `todos/${todoId}`,
+    method: "DELETE",
+  });
+
   const [editTodo, setEditTodo] = useState("");
 
   const handleEditTodo = (event) => {
@@ -64,7 +78,7 @@ const EditTodo = ({
   const handleSubmit = (event) => {
     event.preventDefault();
     if (editTodo === "") return;
-    edit({ todoId, todo: editTodo, isCompleted: true, userId });
+    edit({ todo: editTodo, isCompleted: true });
     setEditTodo("");
   };
 
@@ -94,12 +108,23 @@ const EditTodo = ({
     userId,
   ]);
 
+  const onDelete = () => {
+    deleteTodo({});
+    setTodoList((prev) => {
+      const newTodo = prev.filter((todo) => todo.id !== todoId);
+      return [...newTodo];
+    });
+    setEditMode(false);
+  };
+
   return (
     <EditForm onSubmit={handleSubmit}>
       <EditInput onChange={handleEditTodo} type="text" placeholder="수정하기" />
       <EditButtonContainer>
         <EditButton>{editLoading ? "Loading..." : "수정"}</EditButton>
-        <DeleteButton>삭제</DeleteButton>
+        <DeleteButton onClick={onDelete}>
+          {deleteLoading ? "Loading" : "삭제"}
+        </DeleteButton>
       </EditButtonContainer>
     </EditForm>
   );

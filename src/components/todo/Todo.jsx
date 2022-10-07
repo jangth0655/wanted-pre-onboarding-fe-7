@@ -66,7 +66,7 @@ const DoneTodoMark = styled.div`
   background-color: ${(props) => props.theme.color.textColor.sm};
 `;
 
-const TodoEdit = styled.button`
+const EditButton = styled.button`
   cursor: ${(props) => (props.checked ? "" : "pointer")};
   font-weight: 600;
   color: ${(props) => props.theme.color.textColor.sm};
@@ -113,7 +113,7 @@ const Todo = ({ id, todo, setTodoList, isCompleted, userId }) => {
           <TodoText>
             {todo} {checked && <DoneTodoMark />}
           </TodoText>
-          <TodoEdit
+          <EditButton
             onClick={handleEditMode}
             checked={checked}
             disabled={checked}
@@ -125,7 +125,7 @@ const Todo = ({ id, todo, setTodoList, isCompleted, userId }) => {
                 <AiOutlineEdit />
               </EditIcon>
             )}
-          </TodoEdit>
+          </EditButton>
         </TodoWithEditContainer>
       </TodoContainer>
 

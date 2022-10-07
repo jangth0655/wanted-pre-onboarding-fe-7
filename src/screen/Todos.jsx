@@ -77,7 +77,7 @@ const LogoutButton = styled.button`
 const ToDoListContainer = styled.ul`
   margin: ${(props) => props.theme.mp.lg} 0;
   overflow-y: scroll;
-  height: 70%;
+  height: 80%;
 `;
 
 const Todos = ({ setIsLoggedIn }) => {
@@ -120,7 +120,7 @@ const Todos = ({ setIsLoggedIn }) => {
           "Loading..."
         ) : (
           <ToDoListContainer>
-            {todoList.reverse().map((todo) => (
+            {todoList?.map((todo) => (
               <Todo key={todo.id} {...todo} setTodoList={setTodoList} />
             ))}
           </ToDoListContainer>
