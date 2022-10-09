@@ -10,14 +10,18 @@ const EditForm = styled.form`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  position: relative;
 `;
+
 const EditInput = styled.input`
   width: 90%;
   border: 2px solid ${(props) => props.theme.color.textColor.xxs};
   border-radius: ${(props) => props.theme.borderRadius.md};
   padding: ${(props) => props.theme.mp.md} ${(props) => props.theme.mp.sm};
+  font-size: ${(props) => props.theme.textSize.md};
   background-color: white;
   &::placeholder {
+    font-size: ${(props) => props.theme.textSize.sm};
     color: ${(props) => props.theme.color.textColor.sm};
   }
 `;
@@ -33,7 +37,7 @@ const EditButton = styled(TodoButton)`
   font-weight: 600;
 `;
 
-const DeleteButton = styled(TodoButton).attrs({
+const CancelButton = styled(TodoButton).attrs({
   as: "div",
 })`
   margin-left: ${(props) => props.theme.mp.sm};
@@ -50,20 +54,15 @@ const DeleteButton = styled(TodoButton).attrs({
 `;
 
 const EditTodo = ({
-  id: todoId,
+  id: currentTodoId,
   setTodoList,
   setEditMode,
   userId,
   isCompleted,
 }) => {
   const [edit, { data: editData, isLoading: editLoading }] = useMutation({
-    url: `todos/${todoId}`,
+    url: `todos/${currentTodoId}`,
     method: "PUT",
-  });
-
-  const [deleteTodo, { isLoading: deleteLoading }] = useMutation({
-    url: `todos/${todoId}`,
-    method: "DELETE",
   });
 
   const [editTodo, setEditTodo] = useState("");
@@ -85,11 +84,11 @@ const EditTodo = ({
   useEffect(() => {
     if (editData) {
       setTodoList((prev) => {
-        const todoIndex = prev.findIndex((todo) => todo.id === todoId);
+        const todoIndex = prev.findIndex((todo) => todo.id === currentTodoId);
         const beforeTodo = prev.slice(0, todoIndex);
         const afterTodo = prev.slice(todoIndex + 1);
         const newTodo = {
-          id: todoId,
+          id: currentTodoId,
           isCompleted,
           userId,
           todo: editData.todo,
@@ -104,27 +103,24 @@ const EditTodo = ({
     isCompleted,
     setEditMode,
     setTodoList,
-    todoId,
+    currentTodoId,
     userId,
   ]);
 
-  const onDelete = () => {
-    deleteTodo({});
-    setTodoList((prev) => {
-      const newTodo = prev.filter((todo) => todo.id !== todoId);
-      return [...newTodo];
-    });
+  const onCancelEditMode = () => {
     setEditMode(false);
   };
 
   return (
     <EditForm onSubmit={handleSubmit}>
-      <EditInput onChange={handleEditTodo} type="text" placeholder="수정하기" />
+      <EditInput
+        onChange={handleEditTodo}
+        type="text"
+        placeholder="수정하기"
+      ></EditInput>
       <EditButtonContainer>
         <EditButton>{editLoading ? "Loading..." : "수정"}</EditButton>
-        <DeleteButton onClick={onDelete}>
-          {deleteLoading ? "Loading" : "삭제"}
-        </DeleteButton>
+        <CancelButton onClick={onCancelEditMode}>취소</CancelButton>
       </EditButtonContainer>
     </EditForm>
   );

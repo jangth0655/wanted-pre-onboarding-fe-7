@@ -2,7 +2,11 @@ import { useState } from "react";
 import { BASE_URL, getLocalStorage, TOKEN } from "../server";
 
 const useMutation = ({ url, method }) => {
-  const [value, setValue] = useState({ data: "", isLoading: false, error: "" });
+  const [value, setValue] = useState({
+    data: undefined,
+    isLoading: false,
+    error: undefined,
+  });
   const mutation = async (data) => {
     try {
       const token = getLocalStorage({ name: TOKEN });

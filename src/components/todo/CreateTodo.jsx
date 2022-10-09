@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { FaPlus } from "react-icons/fa";
 import useMutation from "../../lib/useMutation";
 import { useEffect, useState } from "react";
-import ErrorMessage from "../enter/ErrorMessage";
 import { TodoButton } from "../shared";
 
 const ToDoForm = styled.form`
@@ -26,7 +25,8 @@ const ToDoInput = styled.input`
   transition: ${(props) => props.theme.transition.md};
   background-color: white;
   &::placeholder {
-    color: ${(props) => props.theme.color.textColor.sm};
+    color: ${(props) =>
+      props.error ? props.theme.color.red.md : props.theme.color.textColor.sm};
     font-size: ${(props) => props.theme.textSize.sm};
   }
   &:focus {
@@ -55,7 +55,10 @@ const CreateTodo = ({ setTodoList }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (todo.todo === "") return;
+    if (todo === "") {
+      window.alert("할 일을 입력해주세요.");
+      return;
+    }
     submitTodo({ todo });
     setTodo("");
   };
@@ -82,13 +85,13 @@ const CreateTodo = ({ setTodoList }) => {
 
   return (
     <>
-      {errorMessage && <ErrorMessage errorText={errorMessage} />}
       <ToDoForm onSubmit={handleSubmit}>
         <ToDoInput
           onChange={onChange}
           value={todo}
           type="text"
-          placeholder="할 일을 입력해주세요."
+          error={Boolean(errorMessage)}
+          placeholder={errorMessage ? errorMessage : "할 일을 입력해주세요."}
         />
         <ToDoButton>
           {isLoading ? "Loading..." : <FaPlus size={18} />}

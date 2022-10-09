@@ -48,7 +48,6 @@ const SignUp = ({ setIsLoggedIn }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setErrors("");
     if (email === "" || password === "") {
       setErrors("이메일과 패스워드가 필요합니다.");
       return;
@@ -66,9 +65,13 @@ const SignUp = ({ setIsLoggedIn }) => {
 
   useEffect(() => {
     if (data && data.access_token) {
-      navigate("/sign-in");
+      navigate("/sign-in", {
+        state: {
+          signUpEmail: email,
+        },
+      });
     }
-  }, [data, navigate]);
+  }, [data, email, navigate]);
 
   useEffect(() => {
     if (error) {

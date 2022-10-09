@@ -3,9 +3,9 @@ import { BASE_URL, getLocalStorage, TOKEN } from "../server";
 
 const useFetch = ({ url }) => {
   const [response, setResponse] = useState({
-    data: [],
+    data: undefined,
     isLoading: false,
-    error: "",
+    error: undefined,
   });
 
   const fetchTodoList = async (url) => {
@@ -16,7 +16,7 @@ const useFetch = ({ url }) => {
         await fetch(`${BASE_URL}/${url}`, {
           method: "GET",
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token ? token : null}`,
           },
         })
       ).json();

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../components/enter/Button";
 import ErrorMessage from "../components/enter/ErrorMessage";
@@ -25,6 +25,7 @@ const SignIn = ({ setIsLoggedIn }) => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [errors, setErrors] = useState("");
+  const { state } = useLocation();
   const [login, { data, isLoading, error }] = useMutation({
     url: "auth/signin",
     method: "POST",
@@ -93,6 +94,12 @@ const SignIn = ({ setIsLoggedIn }) => {
       setIsLoggedIn(true);
     }
   }, [data, navigate, setIsLoggedIn]);
+
+  useEffect(() => {
+    if (state && state.signUpEmail) {
+      setEmail(state.signUpEmail);
+    }
+  }, [state]);
 
   return (
     <Layout>

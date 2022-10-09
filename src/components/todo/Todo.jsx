@@ -1,8 +1,11 @@
 import { useState } from "react";
 import styled from "styled-components";
+import EditTodo from "./EditTodo";
+
 import { AiOutlineEdit } from "react-icons/ai";
 import { MdDone } from "react-icons/md";
-import EditTodo from "./EditTodo";
+import { HiX } from "react-icons/hi";
+import useMutation from "../../lib/useMutation";
 
 const TodoContainer = styled.div`
   display: flex;
@@ -10,7 +13,7 @@ const TodoContainer = styled.div`
   align-items: center;
   position: relative;
   border-bottom: 1px solid ${(props) => props.theme.color.textColor.xs};
-  padding: ${(props) => props.theme.mp.lg};
+  padding: ${(props) => props.theme.mp.lg} ${(props) => props.theme.mp.sm};
   transition: ${(props) => props.theme.transition.md};
   background-color: white;
   &:last-child {
@@ -23,9 +26,8 @@ const CheckBoxContainer = styled.div`
   justify-content: center;
   align-items: center;
   position: absolute;
-  left: 0;
+  left: 10px;
   margin: auto;
-  width: 10%;
   height: 100%;
 `;
 
@@ -49,7 +51,7 @@ const TodoWithEditContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  margin-left: ${(props) => props.theme.mp.xl};
+  margin-left: ${(props) => props.theme.mp.xxl};
   color: ${(props) => (props.checked ? props.theme.color.textColor.sm : "")};
 `;
 
@@ -67,17 +69,41 @@ const DoneTodoMark = styled.div`
 `;
 
 const EditButton = styled.button`
+  display: flex;
+  align-items: center;
   cursor: ${(props) => (props.checked ? "" : "pointer")};
   font-weight: 600;
   color: ${(props) => props.theme.color.textColor.sm};
   font-size: ${(props) => props.theme.textSize.xl};
 `;
 
+const EditIconBox = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 const EditIcon = styled.span`
+  padding: ${(props) => props.theme.mp.xs};
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: ${(props) => props.theme.color.activeColor.sm};
   transition: ${(props) => props.theme.transition.md};
   &:hover {
     color: ${(props) => props.theme.color.activeColor.xl};
+  }
+`;
+const DeleteIcon = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: ${(props) => props.theme.mp.xs};
+  color: ${(props) => props.theme.color.red.xs};
+  transition: ${(props) => props.theme.transition.md};
+  margin-left: ${(props) => props.theme.mp.md};
+  cursor: pointer;
+  &:hover {
+    color: ${(props) => props.theme.color.red.lg};
   }
 `;
 
@@ -85,7 +111,12 @@ const Todo = ({ id, todo, setTodoList, isCompleted, userId }) => {
   const [checked, setChecked] = useState(false);
   const [editMode, setEditMode] = useState(false);
 
-  const handleChangeCheck = () => {
+  const [deleteTodo] = useMutation({
+    url: `todos/${id}`,
+    method: "DELETE",
+  });
+
+  const handleChangeCheckBox = () => {
     setChecked((checked) => !checked);
   };
 
@@ -93,21 +124,32 @@ const Todo = ({ id, todo, setTodoList, isCompleted, userId }) => {
     setEditMode((prev) => !prev);
   };
 
+  const onDeleteTodo = () => {
+    deleteTodo({});
+    setTodoList((prev) => {
+      const newTodo = prev.filter((prev) => prev.id !== id);
+      return [...newTodo];
+    });
+    setEditMode(false);
+  };
+
   return (
     <>
       <TodoContainer>
-        <CheckBoxContainer>
-          <CheckBox htmlFor={id} checked={checked}>
-            <input
-              style={{ display: "none" }}
-              id={id}
-              type="checkbox"
-              checked={checked}
-              onChange={handleChangeCheck}
-            />
-            {checked && <span>✓</span>}
-          </CheckBox>
-        </CheckBoxContainer>
+        {!editMode ? (
+          <CheckBoxContainer>
+            <CheckBox htmlFor={id} checked={checked}>
+              <input
+                style={{ display: "none" }}
+                id={id}
+                type="checkbox"
+                checked={checked}
+                onChange={handleChangeCheckBox}
+              />
+              {checked && <span>✓</span>}
+            </CheckBox>
+          </CheckBoxContainer>
+        ) : null}
 
         <TodoWithEditContainer checked={checked}>
           <TodoText>
@@ -121,10 +163,15 @@ const Todo = ({ id, todo, setTodoList, isCompleted, userId }) => {
             {checked ? (
               <MdDone />
             ) : (
-              <EditIcon>
-                <AiOutlineEdit />
-              </EditIcon>
+              <EditIconBox>
+                <EditIcon>
+                  <AiOutlineEdit />
+                </EditIcon>
+              </EditIconBox>
             )}
+            <DeleteIcon onClick={onDeleteTodo}>
+              <HiX />
+            </DeleteIcon>
           </EditButton>
         </TodoWithEditContainer>
       </TodoContainer>
