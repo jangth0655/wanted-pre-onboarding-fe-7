@@ -3,7 +3,6 @@ export const BASE_URL =
     ? process.env.REACT_APP_PRODUCT_SERVER
     : process.env.REACT_APP_DEV_SERVER;
 
-//;
 export const TOKEN = "access_token";
 
 export const setLocalStorage = ({ name, value }) => {

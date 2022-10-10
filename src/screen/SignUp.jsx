@@ -65,9 +65,9 @@ const SignUp = ({ setIsLoggedIn }) => {
 
   useEffect(() => {
     if (data && data.access_token) {
-      navigate("/sign-in", {
+      navigate(routes.signIn, {
         state: {
-          signUpEmail: email,
+          signUpEmail: email ? email : null,
         },
       });
     }

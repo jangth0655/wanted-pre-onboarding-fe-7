@@ -84,16 +84,20 @@ const SignIn = ({ setIsLoggedIn }) => {
     password.length < 8;
 
   useEffect(() => {
-    const token = getLocalStorage({ name: TOKEN });
     if (data && data.access_token) {
       setIsLoggedIn(true);
       setLocalStorage({ name: TOKEN, value: data.access_token });
       navigate(routes.todos);
     }
+  }, [data, navigate, setIsLoggedIn]);
+
+  useEffect(() => {
+    const token = getLocalStorage({ name: TOKEN });
     if (token) {
       setIsLoggedIn(true);
+      navigate(routes.todos);
     }
-  }, [data, navigate, setIsLoggedIn]);
+  }, [navigate, setIsLoggedIn]);
 
   useEffect(() => {
     if (state && state.signUpEmail) {
