@@ -15,17 +15,6 @@ function App() {
       <GlobalStyle />
       <BrowserRouter>
         <Routes>
-          <Route path="*" element={<NotFound />} />
-          <Route
-            path={routes.todos}
-            element={
-              isLoggedIn ? (
-                <Todos setIsLoggedIn={setIsLoggedIn} />
-              ) : (
-                <Navigate to={routes.signUp} replace />
-              )
-            }
-          />
           <Route
             path={routes.signIn}
             element={
@@ -33,6 +22,16 @@ function App() {
                 <Navigate to={routes.todos} replace />
               ) : (
                 <SignIn setIsLoggedIn={setIsLoggedIn} />
+              )
+            }
+          />
+          <Route
+            path={routes.todos}
+            element={
+              isLoggedIn ? (
+                <Todos setIsLoggedIn={setIsLoggedIn} />
+              ) : (
+                <Navigate to={routes.signUp} replace />
               )
             }
           />
@@ -46,6 +45,7 @@ function App() {
               )
             }
           />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
