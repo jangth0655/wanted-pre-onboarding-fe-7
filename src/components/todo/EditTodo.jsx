@@ -89,7 +89,7 @@ const EditTodo = ({
         const afterTodo = prev.slice(todoIndex + 1);
         const newTodo = {
           id: currentTodoId,
-          isCompleted,
+          isCompleted: editData.isCompleted,
           userId,
           todo: editData.todo,
         };

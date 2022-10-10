@@ -51,7 +51,6 @@ const SignIn = ({ setIsLoggedIn }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setErrors("");
     if (email === "" || password === "") {
       setErrors("이메일과 패스워드가 필요합니다.");
       return;
@@ -68,11 +67,11 @@ const SignIn = ({ setIsLoggedIn }) => {
   };
 
   useEffect(() => {
-    if (error) {
+    if (data && error) {
       setErrors(error);
       return;
     }
-  }, [error]);
+  }, [data, error]);
 
   const errorMessage = emailError || errors || passwordError;
 

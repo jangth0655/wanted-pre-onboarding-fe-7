@@ -74,11 +74,11 @@ const SignUp = ({ setIsLoggedIn }) => {
   }, [data, email, navigate]);
 
   useEffect(() => {
-    if (error) {
+    if (data && error) {
       setErrors(error);
       return;
     }
-  }, [error]);
+  }, [error, data]);
 
   useEffect(() => {
     const localStorageItem = getLocalStorage({ name: TOKEN });

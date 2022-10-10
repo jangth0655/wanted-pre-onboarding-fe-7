@@ -21,7 +21,7 @@ const ToDoInput = styled.input`
   border-radius: ${(props) => props.theme.borderRadius.md};
   border: 1px solid ${(props) => props.theme.color.bg.xl};
   margin-right: ${(props) => props.theme.mp.sm};
-  font-size: ${(props) => props.theme.textSize.lg};
+  font-size: ${(props) => props.theme.textSize.md};
   transition: ${(props) => props.theme.transition.md};
   background-color: white;
   &::placeholder {
@@ -69,7 +69,7 @@ const CreateTodo = ({ setTodoList }) => {
         ...prev,
         {
           id: data.id,
-          isCompleted: todo.isCompleted,
+          isCompleted: data.isCompleted,
           todo: data.todo,
           userId: data.userId,
         },
