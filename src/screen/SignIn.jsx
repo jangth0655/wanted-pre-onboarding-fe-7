@@ -86,7 +86,7 @@ const SignIn = ({ setIsLoggedIn }) => {
     if (data && data.access_token) {
       setIsLoggedIn(true);
       setLocalStorage({ name: TOKEN, value: data.access_token });
-      navigate(routes.todos);
+      navigate(routes.todo);
     }
   }, [data, navigate, setIsLoggedIn]);
 
@@ -94,7 +94,7 @@ const SignIn = ({ setIsLoggedIn }) => {
     const token = getLocalStorage({ name: TOKEN });
     if (token) {
       setIsLoggedIn(true);
-      navigate(routes.todos);
+      navigate(routes.todo);
     }
   }, [navigate, setIsLoggedIn]);
 

@@ -19,14 +19,14 @@ function App() {
             path={routes.signIn}
             element={
               isLoggedIn ? (
-                <Navigate to={routes.todos} replace />
+                <Navigate to={routes.todo} replace />
               ) : (
                 <SignIn setIsLoggedIn={setIsLoggedIn} />
               )
             }
           />
           <Route
-            path={routes.todos}
+            path={routes.todo}
             element={
               isLoggedIn ? (
                 <Todos setIsLoggedIn={setIsLoggedIn} />
@@ -39,7 +39,7 @@ function App() {
             path={routes.signUp}
             element={
               isLoggedIn ? (
-                <Navigate to={routes.todos} replace />
+                <Navigate to={routes.todo} replace />
               ) : (
                 <SignUp setIsLoggedIn={setIsLoggedIn} />
               )
