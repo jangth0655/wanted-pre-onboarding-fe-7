@@ -114,7 +114,7 @@ const SignUp = ({ setIsLoggedIn }) => {
             id="password"
             onChange={handlePassword}
             value={password}
-            placeholder="비밀번호를 입력해주세요."
+            placeholder="비밀번호 8자리 이상 입력해주세요."
             type="password"
           />
           <Button disabled={disabled} text="회원가입" isLoading={isLoading} />

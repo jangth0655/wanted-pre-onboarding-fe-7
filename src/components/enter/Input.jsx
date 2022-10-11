@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { HiOutlineUser } from "react-icons/hi";
+import { AiOutlineMail } from "react-icons/ai";
 import { HiOutlineLockClosed } from "react-icons/hi";
 import { EnterCommonBox } from "../shared";
 
@@ -53,7 +53,7 @@ const Input = ({ label, type, value, placeholder, id, onChange }) => {
       <InputBox>
         <UserIcon>
           {id === "email" ? (
-            <HiOutlineUser size={25} />
+            <AiOutlineMail size={25} />
           ) : (
             <HiOutlineLockClosed size={25} />
           )}

@@ -125,7 +125,7 @@ const SignIn = ({ setIsLoggedIn }) => {
             placeholder="비밀번호를 입력해주세요."
             type="password"
           />
-          <Button disabled={disabled} text="회원가입" isLoading={isLoading} />
+          <Button disabled={disabled} text="로그인" isLoading={isLoading} />
         </Form>
         {errorMessage && <ErrorMessage errorText={errorMessage} />}
         <LinkComp text="회원가입" path={routes.signUp} />
