@@ -10,7 +10,7 @@ import Layout from "../components/Layout";
 import { EnterPageContainer } from "../components/shared";
 import useMutation from "../lib/useMutation";
 import routes from "../routes";
-import { getLocalStorage, TOKEN } from "../server";
+import { getLocalStorage, TOKEN_NAME } from "../server";
 
 const Form = styled.form`
   width: 100%;
@@ -81,7 +81,7 @@ const SignUp = ({ setIsLoggedIn }) => {
   }, [error, data]);
 
   useEffect(() => {
-    const localStorageItem = getLocalStorage({ name: TOKEN });
+    const localStorageItem = getLocalStorage({ name: TOKEN_NAME });
     if (localStorageItem) {
       setIsLoggedIn(true);
     }

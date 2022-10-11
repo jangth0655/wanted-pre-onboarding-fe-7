@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BASE_URL, getLocalStorage, TOKEN } from "../server";
+import { BASE_URL, getLocalStorage, TOKEN_NAME } from "../server";
 
 const useMutation = ({ url, method }) => {
   const [value, setValue] = useState({
@@ -9,7 +9,7 @@ const useMutation = ({ url, method }) => {
   });
   const mutation = async (data) => {
     try {
-      const token = getLocalStorage({ name: TOKEN });
+      const token = getLocalStorage({ name: TOKEN_NAME });
       setValue((prev) => ({ ...prev, isLoading: true }));
       const response = await (
         await fetch(`${BASE_URL}/${url}`, {

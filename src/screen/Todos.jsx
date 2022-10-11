@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Layout from "../components/Layout";
-import { deleteLocalStorage, getLocalStorage, TOKEN } from "../server";
+import { deleteLocalStorage, getLocalStorage, TOKEN_NAME } from "../server";
 
 import formatDateAndDay from "../lib/formatDateAndDay";
 import CreateTodo from "../components/todo/CreateTodo";
@@ -85,7 +85,7 @@ const Todos = ({ setIsLoggedIn }) => {
   const [todoList, setTodoList] = useState([]);
 
   const onLogout = () => {
-    deleteLocalStorage({ name: TOKEN });
+    deleteLocalStorage({ name: TOKEN_NAME });
     setIsLoggedIn(false);
   };
 
@@ -94,7 +94,7 @@ const Todos = ({ setIsLoggedIn }) => {
   }, [data]);
 
   useEffect(() => {
-    const token = getLocalStorage({ name: TOKEN });
+    const token = getLocalStorage({ name: TOKEN_NAME });
     if (!token) {
       setIsLoggedIn(false);
     }

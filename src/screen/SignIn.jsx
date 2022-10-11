@@ -10,13 +10,11 @@ import Layout from "../components/Layout";
 import { EnterPageContainer } from "../components/shared";
 import useMutation from "../lib/useMutation";
 import routes from "../routes";
-import { getLocalStorage, setLocalStorage } from "../server";
+import { getLocalStorage, setLocalStorage, TOKEN_NAME } from "../server";
 
 const Form = styled.form`
   width: 100%;
 `;
-
-const TOKEN = "access_token";
 
 const SignIn = ({ setIsLoggedIn }) => {
   const navigate = useNavigate();
@@ -85,13 +83,13 @@ const SignIn = ({ setIsLoggedIn }) => {
   useEffect(() => {
     if (data && data.access_token) {
       setIsLoggedIn(true);
-      setLocalStorage({ name: TOKEN, value: data.access_token });
+      setLocalStorage({ name: TOKEN_NAME, value: data.access_token });
       navigate(routes.todo);
     }
   }, [data, navigate, setIsLoggedIn]);
 
   useEffect(() => {
-    const token = getLocalStorage({ name: TOKEN });
+    const token = getLocalStorage({ name: TOKEN_NAME });
     if (token) {
       setIsLoggedIn(true);
       navigate(routes.todo);

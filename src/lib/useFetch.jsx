@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BASE_URL, getLocalStorage, TOKEN } from "../server";
+import { BASE_URL, getLocalStorage, TOKEN_NAME } from "../server";
 
 const useFetch = ({ url }) => {
   const [response, setResponse] = useState({
@@ -9,7 +9,7 @@ const useFetch = ({ url }) => {
   });
 
   const fetchTodoList = async (url) => {
-    const token = getLocalStorage({ name: TOKEN });
+    const token = getLocalStorage({ name: TOKEN_NAME });
     try {
       setResponse((prev) => ({ ...prev, isLoading: true }));
       const results = await (
