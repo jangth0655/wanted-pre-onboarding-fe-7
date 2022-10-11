@@ -72,6 +72,6 @@ $ npm start
    → `수정모드에서는 완료 체크를 할 수 없습니다.`
   <br /><br />
 
-  <img height="500" src="./preview/todolist.gif" />
+  <img height="500" src="./preview/todo.gif" />
 
 <br /><br />
