@@ -13,7 +13,7 @@ const useMutation = ({ url, method }) => {
       setValue((prev) => ({ ...prev, isLoading: true }));
       const response = await (
         await fetch(`${BASE_URL}/${url}`, {
-          method: method,
+          method: method.toUpperCase(),
           body: JSON.stringify(data),
           headers: {
             "Content-Type": "application/json",
